@@ -9,26 +9,32 @@ namespace IssuesTracker.Controllers
 {
     public class HomeController : Controller
     {
+        Repository r = new Repository();
         public ActionResult Index()
         {
-            myDBContext db = new myDBContext();
-            db.Projects.Add(new Project() { Name = "MyProject" });
-            db.SaveChanges();
-            return View();
+            return View(r.getProjects());
         }
-
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult AddIssue(Issue issue)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return Json(issue);
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult EditIssue(Issue issue)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            r.editIssue(issue);
+            return Json(issue);
         }
+        [HttpGet]
+        public ActionResult GetIssues(int id)
+        {
+            return Json(r.getIssues(id), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Kanban()
+        {
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+       
     }
 }
