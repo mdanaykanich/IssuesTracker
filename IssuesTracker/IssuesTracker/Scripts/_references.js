@@ -1,6 +1,5 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="ai.0.22.9-build00167.js" />
-/// <reference path="bootstrap.bundle.min.js" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="esm/popper.min.js" />
 /// <reference path="esm/popper-utils.min.js" />
