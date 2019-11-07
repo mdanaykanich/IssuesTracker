@@ -42,10 +42,20 @@ namespace IssuesTracker.Models
 
         }
 
+        public Issue_for_View getIssue(int id)
+        {
+            return ViewIssues(db.Issues.Where(i => i.Id == id).ToList()).First();
+        }
+
         public List<Issue_for_View> getIssues(int projectId)
         {
             return ViewIssues(db.Issues.Where(i => i.ProjectId == projectId).ToList());
             
+        }
+
+        public int getProjectIdByName(string projectName)
+        {
+            return db.Projects.Where(p => p.Name == projectName).First().Id;
         }
 
         public List<Project> getProjects()
@@ -67,7 +77,10 @@ namespace IssuesTracker.Models
                     Priority = i.Priority.ToString(),
                     Type = i.Type.ToString(),
                     Assignee = i.Assignee,
-                    ProjectId = i.ProjectId
+                    ProjectName = db.Projects.Where(p => p.Id == i.ProjectId).Select(pr => pr.Name).First(),
+                    ProjectId = i.ProjectId,
+                    Types = new List<string>() {"New", "InProgress", "Done" },
+                    Priorities = new List<string>() {"Trivial", "Low", "Medium", "High", "Critical" }
                 });
             }
             return iss;

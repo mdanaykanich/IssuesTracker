@@ -9,26 +9,50 @@ namespace IssuesTracker.Controllers
 {
     public class HomeController : Controller
     {
-        Repository r = new Repository();
+        Repository repository = new Repository();
         public ActionResult Index()
         {
-            return View(r.getProjects());
+            return View(repository.getProjects());
         }
         [HttpPost]
-        public ActionResult AddIssue(Issue issue)
+        public ActionResult AddIssue(Issue_for_View issue)
         {
-            return Json(issue);
+            Issue iss = new Issue()
+            {
+                Summary = issue.Summary,
+                Description = issue.Description,
+                Assignee = issue.Assignee,
+                ProjectId = issue.ProjectId,
+                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issue.Type, true),
+                Priority = (Priority)Enum.Parse(typeof(Priority), issue.Priority, true)
+            };
+            repository.addIssue(iss);
+            return Json("Successfully created");
         }
         [HttpPost]
-        public ActionResult EditIssue(Issue issue)
+        public ActionResult EditIssue(Issue_for_View issue)
         {
-            r.editIssue(issue);
-            return Json(issue);
+            Issue iss = new Issue()
+            {
+                Id = issue.Id,
+                Summary = issue.Summary,
+                Description = issue.Description,
+                Assignee = issue.Assignee,
+                ProjectId = repository.getProjectIdByName(issue.ProjectName),
+                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issue.Type, true),
+                Priority = (Priority) Enum.Parse(typeof(Priority), issue.Priority, true)
+            };
+            repository.editIssue(iss);
+            return Json("Successfully edited");
         }
         [HttpGet]
-        public ActionResult GetIssues(int id)
+        public ActionResult GetIssues(int id)//id = ProjectId
         {
-            return Json(r.getIssues(id), JsonRequestBehavior.AllowGet);
+            return Json(repository.getIssues(id), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetIssue(int id)//id = IssueId
+        {
+            return Json(repository.getIssue(id), JsonRequestBehavior.AllowGet);
         }
         public ActionResult Kanban()
         {

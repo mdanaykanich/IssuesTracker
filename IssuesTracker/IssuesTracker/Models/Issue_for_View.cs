@@ -13,7 +13,10 @@ namespace IssuesTracker.Models
         public string Assignee { get; set; }
         public string Priority { get; set; }
         public string Type { get; set; }
+        public string ProjectName { get; set; }
         public int ProjectId { get; set; }
+        public List<string> Types { get; set; }
+        public List<string> Priorities { get; set; }
 
     }
 }

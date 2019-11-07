@@ -14,5 +14,7 @@ namespace IssuesTracker.Models
         List<Issue_for_View> getIssues(int projectId);
         List<Project> getProjects();
         List<Issue_for_View> ViewIssues(List<Issue> issues);
+        Issue_for_View getIssue(int id);
+        int getProjectIdByName(string projectName);
     }
 }
