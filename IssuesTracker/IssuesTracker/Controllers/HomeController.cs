@@ -26,8 +26,8 @@ namespace IssuesTracker.Controllers
                 Type = (Models.Type)Enum.Parse(typeof(Models.Type), issue.Type, true),
                 Priority = (Priority)Enum.Parse(typeof(Priority), issue.Priority, true)
             };
-            repository.addIssue(iss);
-            return Json("Successfully created");
+            var str = repository.addIssue(iss);
+            return Json(str);
         }
         [HttpPost]
         public ActionResult EditIssue(Issue_for_View issue)
@@ -54,10 +54,18 @@ namespace IssuesTracker.Controllers
         {
             return Json(repository.getIssue(id), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetPriorities()
+        {
+            return Json(Enum.GetNames(typeof(Priority)).ToList(), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Kanban()
         {
-
-            return Json(null, JsonRequestBehavior.AllowGet);
+            ViewBag.projects = repository.getProjects();
+            return View();
+        }
+        public ActionResult GetSortedIssues(int id)
+        {
+            return Json(repository.sortIssues(id), JsonRequestBehavior.AllowGet);
         }
        
     }

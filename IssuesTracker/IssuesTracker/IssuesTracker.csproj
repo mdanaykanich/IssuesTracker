@@ -173,6 +173,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Issue.cs" />
+    <Compile Include="Models\Issues_for_Kanban.cs" />
     <Compile Include="Models\Issue_for_View.cs" />
     <Compile Include="Models\myDBContext.cs" />
     <Compile Include="Models\Project.cs" />
@@ -236,8 +237,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kanban.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\myscript.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -273,6 +275,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Kanban.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911041454534_InitialCreate.resx">

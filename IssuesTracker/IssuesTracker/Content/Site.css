@@ -15,6 +15,21 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+.kanban-li {
+    background-color: #d8d8d8; 
+    border-radius: 8px; 
+    margin: 2px 2px 0 2px;
+}
+.kanban-ul {
+    border: 1px solid silver; 
+    height:31.5em; 
+    overflow: auto; 
+    border-radius: 8px;
+}
+.kanban-span {
+    font-weight: bold; 
+    color: steelblue;
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
 
