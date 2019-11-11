@@ -8,6 +8,41 @@
     function init(projectId) {
         getIssues(projectId);
         eventHandler();
+        $('#newIssues, #inprogressIssues, #doneIssues').sortable({
+            connectWith: '.connectedSortable'
+        }).disableSelection();
+
+        $('#newIssues').sortable({
+            receive: function (ev, ui) {
+                
+                if (ui.item.hasClass('_inprogress') || ui.item.hasClass('_done')) {
+                    ui.sender.sortable('cancel');
+                }
+            }
+        });
+        $('#inprogressIssues').sortable({
+            receive: function (ev, ui) {
+                if (ui.item.hasClass('_done')) {
+                    ui.sender.sortable('cancel');
+                }
+                else {
+                    ui.item[0].classList.remove('_new');
+                    ui.item[0].classList.add('_inprogress');
+                }
+            }
+        });
+        $('#doneIssues').sortable({
+            receive: function (ev, ui) {
+                if (ui.item.hasClass('_new')) {
+                    ui.item[0].classList.remove('_new');
+                    ui.item[0].classList.add('_done');
+                }
+                else {
+                    ui.item[0].classList.remove('_inprogress');
+                    ui.item[0].classList.add('_done');
+                }
+            }
+        });
     }
     function eventHandler() {
         selectProject.addEventListener('change', function (event) {
@@ -27,14 +62,17 @@
                     var liIssue = create_liIssue(result[i]);
                     switch (result[i].Type) {
                         case 'New': {
+                            liIssue.classList.add('_new');
                             ulNewIssues.appendChild(liIssue);
                             break;
                         }
                         case 'InProgress': {
+                            liIssue.classList.add('_inprogress');
                             ulInprogressIssues.appendChild(liIssue);
                             break;
                         }
                         case 'Done': {
+                            liIssue.classList.add('_done');
                             ulDoneIssues.appendChild(liIssue);
                             break;
                         }
@@ -46,7 +84,6 @@
     function create_liIssue(issue) {
         let li = document.createElement('li');
         li.setAttribute('class', 'list-group-item kanban-li');
-
         let divr1 = document.createElement('div');
         divr1.setAttribute('class', 'row');
         let divcl1 = document.createElement('div');
