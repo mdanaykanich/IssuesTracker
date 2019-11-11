@@ -54,17 +54,16 @@
             createIssue();
         });
         $('#IssueModal').on('hidden.bs.modal', function () {
-            $("#selectType option").each(function () {
-                $(this).remove();
-            });
-            $("#selectPriority option").each(function () {
-                $(this).remove();
-            });
+            $("#selectType option").innerHTML='';
+            $("#selectPriority option").innerHTML='';
         });
         $('#inpSummary').on('input', (function (e) {
-            if ($('#inpSummary').val().length >= 4)
+            if ($('#inpSummary').val().length >= 4) {
                 $('#btnSave').attr('disabled', false);
-            else $('#btnSave').attr('disabled', true);
+            }
+            else {
+                $('#btnSave').attr('disabled', true);
+            }
         }));
     }
     function getPriorities() {
@@ -86,7 +85,7 @@
         $('#inpProjectName').prop('disabled', true);
         $('#selectType').prop('disabled', 'disabled');
         $('#inpSummary').val('');
-        $('#txtareaDescr').text('');
+        $('#txtareaDescr').val('');
         $('#inpAssignee').val();
         $.each(priorities, function (key, value) {
             if (value === 'Trivial')

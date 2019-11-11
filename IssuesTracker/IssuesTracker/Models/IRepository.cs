@@ -15,7 +15,6 @@ namespace IssuesTracker.Models
         List<Project> getProjects();
         List<Issue_for_View> ViewIssues(List<Issue> issues);
         Issue_for_View getIssue(int id);
-        Issues_for_Kanban sortIssues(int projectId); 
         int getProjectIdByName(string projectName);
     }
 }

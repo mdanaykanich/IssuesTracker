@@ -63,10 +63,5 @@ namespace IssuesTracker.Controllers
             ViewBag.projects = repository.getProjects();
             return View();
         }
-        public ActionResult GetSortedIssues(int id)
-        {
-            return Json(repository.sortIssues(id), JsonRequestBehavior.AllowGet);
-        }
-       
     }
 }

@@ -173,7 +173,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Issue.cs" />
-    <Compile Include="Models\Issues_for_Kanban.cs" />
     <Compile Include="Models\Issue_for_View.cs" />
     <Compile Include="Models\myDBContext.cs" />
     <Compile Include="Models\Project.cs" />

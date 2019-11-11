@@ -68,53 +68,6 @@ namespace IssuesTracker.Models
             return db.Projects.ToList();
         }
 
-        public Issue_for_View convertIssue(Issue issue)
-        {
-            return new Issue_for_View()
-            {
-                Id = issue.Id,
-                Summary = issue.Summary,
-                Description = issue.Description,
-                Priority = issue.Priority.ToString(),
-                Type = issue.Type.ToString(),
-                Assignee = issue.Assignee,
-                ProjectName = db.Projects.Where(p => p.Id == issue.ProjectId).Select(pr => pr.Name).First(),
-                ProjectId = issue.ProjectId,
-                Types = new List<string>() { "New", "InProgress", "Done" },
-                Priorities = new List<string>() { "Trivial", "Low", "Medium", "High", "Critical" }
-            };
-        }
-
-        public Issues_for_Kanban sortIssues(int projectId)
-        {
-            Issues_for_Kanban sortIss = new Issues_for_Kanban();
-            List<Issue> issues = new List<Issue>();
-            issues = db.Issues.Where(i => i.ProjectId == projectId).ToList();
-            foreach (var issue in issues)
-            {
-                switch (issue.Type)
-                {
-                    case Type.New:
-                        {
-                            sortIss.newIssues.Add(convertIssue(issue));
-                            break;
-                        }
-                    case Type.InProgress:
-                        {
-                            sortIss.inprogressIssues.Add(convertIssue(issue));
-                            break;
-                        }
-                    case Type.Done:
-                        {
-                            sortIss.doneIssues.Add(convertIssue(issue));
-                            break;
-                        }
-
-                }
-            }
-            return sortIss;
-        }
-
         public List<Issue_for_View> ViewIssues(List<Issue> issues)
         {
             List<Issue_for_View> iss = new List<Issue_for_View>();

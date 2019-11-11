@@ -22,7 +22,7 @@
 }
 .kanban-ul {
     border: 1px solid silver; 
-    height:31.5em; 
+    height: 35em; 
     overflow: auto; 
     border-radius: 8px;
 }
