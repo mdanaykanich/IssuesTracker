@@ -1,0 +1,118 @@
+﻿@model IssuesTracker.Models.Issue_for_View
+
+<div class="modal-lg modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="modal-title" style="font-weight: bold" id="title">@ViewBag.Action Issue</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="close" style="margin-top: 5px" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1">
+                        @if (ViewBag.Action == "Edit" && Model.Summary.Length >= 4)
+                        {
+                            <button id="save" class="btn btn-primary">Save</button>
+                        }
+                        else
+                        {
+                            <button id="save" disabled class="btn btn-primary">Save</button>
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        @if (ViewBag.Action == "Create")
+                        {
+                            <select id="selectType" disabled style="width: 200px" class="form-control">
+                                <option selected value="New">New</option>
+                            </select>
+                        }
+                        @if (ViewBag.Action == "Edit")
+                        {
+                            <select id="selectType" style="width: 200px" class="form-control">
+                                @foreach (var type in Model.Types)
+                                {
+                                    if (type == Model.Type)
+                                    {
+                                        <option selected value="@type">@type</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@type">@type</option>
+                                    }
+                                }
+                            </select>
+                        }
+
+                    </div>
+                    <div class="col-md-2">
+                        <label style="visibility: hidden" id="projectId">@Model.ProjectId</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <h5 style="font-weight: bold">Project Name:</h5>
+                        <input id="projectName" disabled class="form-control" value="@Model.ProjectName" />
+                    </div>
+                    <div class="col-md-3">
+                        <h5 style="font-weight: bold">Number</h5>
+                        @if (ViewBag.Action == "Create")
+                        {
+                            <input id="issueId" disabled class="form-control" />
+                        }
+                        @if (ViewBag.Action == "Edit")
+                        {
+                            <input id="issueId" disabled value="@Model.Id.ToString("D6")" class="form-control" />
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="font-weight: bold">Summary:</h5>
+                        <input id="summary" type="text" value="@Model.Summary" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5 style="font-weight: bold">Description:</h5>
+                        <textarea id="description" rows="5" class="form-control">@Model.Description</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 style="font-weight: bold">Assignee:</h5>
+                        <input id="assignee" class="form-control" value="@Model.Assignee" />
+                    </div>
+                    <div class="col-md-6">
+                        <h5 style="font-weight: bold">Priority:</h5>
+                        <select id="selectPriority" class="form-control">
+                            @foreach (var priority in Model.Priorities)
+                            {
+                                if (priority == Model.Priority)
+                                {
+                                    <option selected value="@priority">@priority</option>
+                                }
+                                else
+                                {
+                                    <option value="@priority">@priority</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/issuemodal.js")" type="text/javascript"></script>
+}

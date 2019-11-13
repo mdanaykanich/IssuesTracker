@@ -20,6 +20,19 @@ namespace IssuesTracker.Models
             }
             return "Successfully added"; 
         }
+
+        public string changeType(int id, string type)
+        {
+            var issue = db.Issues.Where(i => i.Id == id).First();
+            if(issue != null)
+            {
+                issue.Type = (Type)Enum.Parse(typeof(Models.Type), type, true);
+                db.SaveChanges();
+                return "Successfully changed";
+            }
+            return "Error";
+        }
+
         public string editIssue(Issue issue)
         {
             bool status; 

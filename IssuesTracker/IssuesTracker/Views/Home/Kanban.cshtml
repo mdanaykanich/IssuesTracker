@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row" style="margin-top: 10px">
-        <div class="col-1"/>
+        <div class="col-1" />
         <div class="col-10">
             <select id="project-select" style="width: 100%" class="form-control">
                 @{
@@ -41,20 +41,7 @@
             <label style="font-size: 18px">Done</label>
         </div>
     </div>
-    <div class="row" >
-        <div class="bounds"></div>
-        <div class="col-sm-4">
-            <ul class="list-group kanban-ul connectedSortable" id="newIssues">
-            </ul>
-        </div>
-        <div class="col-sm-4">
-            <ul class="list-group kanban-ul connectedSortable" id="inprogressIssues">
-            </ul>
-        </div>
-        <div class="col-sm-4">
-            <ul class="list-group kanban-ul connectedSortable" id="doneIssues">
-            </ul>
-        </div>
+    <div class="row" id="kanban-result">
     </div>
 </div>
 @section Scripts {

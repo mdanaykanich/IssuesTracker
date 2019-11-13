@@ -1,0 +1,16 @@
+﻿@model List<IssuesTracker.Models.Issue_for_View>
+
+@{
+    foreach (var issue in Model)
+    {
+        <tr>
+            <th>@issue.Id.ToString("D6")</th>
+            <td>@issue.Summary</td>
+            <td>@issue.Description</td>
+            <td>@issue.Priority</td>
+            <td>@issue.Assignee</td>
+            <td><button class="btn btn-light btn-edit" value="@issue.Id" data-target="#issueModal" data-toggle="modal">Edit</button></td>
+        </tr>
+    }
+
+}

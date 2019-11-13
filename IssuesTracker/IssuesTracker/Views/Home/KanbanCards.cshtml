@@ -1,0 +1,96 @@
+﻿@model List<IssuesTracker.Models.Issue_for_View>
+
+<div class="bounds"></div>
+<div class="col-sm-4">
+    <ul class="list-group kanban-ul connectedSortable" id="newIssues">
+        @foreach(var issue in Model.Where(i=>i.Type=="New"))
+        {
+            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em; display: block">
+                            <span class="kanban-span">Summary: </span>@issue.Summary
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Priority: </span>@issue.Priority
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Assignee: </span>@issue.Assignee
+                        </span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="col-sm-4">
+    <ul class="list-group kanban-ul connectedSortable" id="inprogressIssues">
+        @foreach (var issue in Model.Where(i => i.Type == "InProgress"))
+        {
+            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em; display: block">
+                            <span class="kanban-span">Summary: </span>@issue.Summary
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Priority: </span>@issue.Priority
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Assignee: </span>@issue.Assignee
+                        </span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="col-sm-4">
+    <ul class="list-group kanban-ul connectedSortable" id="doneIssues">
+        @foreach (var issue in Model.Where(i => i.Type == "Done"))
+        {
+            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em; display: block">
+                            <span class="kanban-span">Summary: </span>@issue.Summary
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Priority: </span>@issue.Priority
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span style="margin-left: 1em">
+                            <span class="kanban-span">Assignee: </span>@issue.Assignee
+                        </span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+@section Scripys{
+    <script src="@Url.Content("~/Scripts/kanbancards.js")" type="text/javascript"></script>
+}

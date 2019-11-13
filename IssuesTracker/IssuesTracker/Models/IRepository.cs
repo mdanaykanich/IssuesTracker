@@ -11,6 +11,7 @@ namespace IssuesTracker.Models
     {
         string addIssue(Issue issue);
         string editIssue(Issue issue);
+        string changeType(int id, string type);
         List<Issue_for_View> getIssues(int projectId);
         List<Project> getProjects();
         List<Issue_for_View> ViewIssues(List<Issue> issues);

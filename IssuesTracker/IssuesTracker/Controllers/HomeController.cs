@@ -46,13 +46,43 @@ namespace IssuesTracker.Controllers
             return Json("Successfully edited");
         }
         [HttpGet]
-        public ActionResult GetIssues(int id)//id = ProjectId
+        public ActionResult GetGridIssues(int id) //id = projectId
+        {
+            return PartialView(repository.getIssues(id));
+        }
+        [HttpGet]
+        public ActionResult GetIssues(int id)//id = projectId
         {
             return Json(repository.getIssues(id), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetIssue(int id)//id = IssueId
+        public ActionResult GetIssue(int id)//id = issueId
         {
             return Json(repository.getIssue(id), JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult IssueModal(int projectId, int id=-1)
+        {
+            if (id == -1)
+            {
+                ViewBag.Action = "Create";
+                var issue = new Issue();
+                issue.ProjectId = projectId;
+                var issue_for_view = repository.ViewIssues(new List<Issue>() { issue }).First();
+                issue_for_view.Priority = "Trivial";
+                return PartialView(issue_for_view);
+            }
+            ViewBag.Action = "Edit";
+            return PartialView(repository.getIssue(id));
+        }
+        [HttpGet]
+        public ActionResult KanbanCards(int id)//id=projectId
+        {
+            return PartialView(repository.getIssues(id));
+        }
+        [HttpPost]
+        public ActionResult UpdateType(int issueId, string issueType)//id = issueId
+        {
+            return Json(repository.changeType(issueId, issueType));
         }
         public ActionResult GetPriorities()
         {
