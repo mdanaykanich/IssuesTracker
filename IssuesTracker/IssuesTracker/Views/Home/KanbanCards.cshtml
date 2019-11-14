@@ -1,141 +1,38 @@
 ﻿@model List<IssuesTracker.Models.Issue_for_View>
 
 <div class="bounds"></div>
-<div class="col-sm-4">
-    <ul class="list-group kanban-ul connectedSortable" id="newIssues">
-        @foreach(var issue in Model.Where(i=>i.Type=="New"))
-        {
-            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em; display: block">
-                            <span class="kanban-span">Summary: </span>@issue.Summary
-                        </span>
+
+@foreach (var type in ViewBag.Types)
+{
+    <div class="col-sm-4">
+        <ul class="list-group kanban-ul connectedSortable" id="@type.ToLower()Issues">
+            @foreach (var issue in Model.Where(i => i.Type == type))
+            {
+                <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
+                    <div class="row">
+                        <div class="col">
+                            <span style="margin-left: 1em; display: block">
+                                <span class="kanban-span">Summary: </span>@issue.Summary
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Priority: </span>@issue.Priority
-                        </span>
+                    <div class="row">
+                        <div class="col">
+                            <span style="margin-left: 1em">
+                                <span class="kanban-span">Priority: </span>@issue.Priority
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Assignee: </span>@issue.Assignee
-                        </span>
+                    <div class="row">
+                        <div class="col">
+                            <span style="margin-left: 1em">
+                                <span class="kanban-span">Assignee: </span>@issue.Assignee
+                            </span>
+                        </div>
                     </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-<div class="col-sm-4">
-    <ul class="list-group kanban-ul connectedSortable" id="inprogressIssues">
-        @foreach (var issue in Model.Where(i => i.Type == "InProgress"))
-        {
-            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em; display: block">
-                            <span class="kanban-span">Summary: </span>@issue.Summary
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Priority: </span>@issue.Priority
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Assignee: </span>@issue.Assignee
-                        </span>
-                    </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-<div class="col-sm-4">
-    <ul class="list-group kanban-ul connectedSortable" id="doneIssues">
-        @foreach (var issue in Model.Where(i => i.Type == "Done"))
-        {
-            <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em; display: block">
-                            <span class="kanban-span">Summary: </span>@issue.Summary
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Priority: </span>@issue.Priority
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span style="margin-left: 1em">
-                            <span class="kanban-span">Assignee: </span>@issue.Assignee
-                        </span>
-                    </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-<script>
-    $('#newIssues, #inprogressIssues, #doneIssues').sortable({
-        connectWith: '.connectedSortable'
-    }).disableSelection();
-    $('#newIssues').sortable({
-        receive: function (ev, ui) {
-            if (ui.item[0].dataset.type == 'InProgress' || ui.item[0].dataset.type == 'Done') {
-                ui.sender.sortable('cancel');
+                </li>
             }
-        }
-    });
-    $('#inprogressIssues').sortable({
-        receive: function (ev, ui) {
-            if (ui.item[0].dataset.type == 'Done') {
-                ui.sender.sortable('cancel');
-            }
-            else {
-                ui.item[0].dataset.type = 'InProgress';
-                let issue = {
-                    issueId: ui.item[0].id,
-                    issueType: ui.item[0].dataset.type
-                };
-                changeType(issue);
-            }
-        }
-    });
-    $('#doneIssues').sortable({
-        receive: function (ev, ui) {
-            ui.item[0].dataset.type = 'Done';
-            let issue = {
-                issueId: ui.item[0].id,
-                issueType: ui.item[0].dataset.type
-            };
-            changeType(issue);
-        }
-    });
-    function changeType(issue) {
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json',
-            url: '/Home/UpdateType',
-            dataType: 'json',
-            data: JSON.stringify(issue),
-            success: function (result) {
-            }
-        });
-    }
-</script>
+        </ul>
+    </div>
+}
+<script src="@Url.Content("~/Scripts/app/kanbancards.js")" type="text/javascript"></script>

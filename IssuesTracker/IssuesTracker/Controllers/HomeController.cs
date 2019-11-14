@@ -77,6 +77,7 @@ namespace IssuesTracker.Controllers
         [HttpGet]
         public ActionResult KanbanCards(int id)//id=projectId
         {
+            ViewBag.Types = Enum.GetNames(typeof(Models.Type)).ToList();
             return PartialView(repository.getIssues(id));
         }
         [HttpPost]
