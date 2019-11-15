@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace IssuesTracker.Models
 {
-    public class myDBContext: DbContext
+    public class myDBContext: IdentityDbContext<AppUser>
     {
         public myDBContext(): base("DefaultConnection") { }
         public DbSet<Project> Projects { get; set; }

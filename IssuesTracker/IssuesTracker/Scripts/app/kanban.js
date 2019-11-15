@@ -1,8 +1,5 @@
 ﻿$(function () {
     const selectProject = document.getElementById('project-select');
-    const newIssues = document.getElementById('newIssues');
-    const inprogressIssues = document.getElementById('inprogressIssues');
-    const doneIssues = document.getElementById('doneIssues');
     init($('#project-select').val());
     function init(projectId) {
         renderCards(projectId);

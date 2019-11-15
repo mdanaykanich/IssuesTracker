@@ -21,6 +21,21 @@ namespace IssuesTracker.Models
             return "Successfully added"; 
         }
 
+        public string addUser(AppUser user)
+        {
+            db.Users.Add(user);
+            db.SaveChanges();
+            return "Successfully added";
+        }
+        public bool checkUserByEmail(string email)
+        {
+            return db.Users.Any(u => u.Email == email);
+        }
+        public bool isValidUser(string email, string password)
+        {
+            return db.Users.Any(u => u.Email == email && u.PasswordHash == password);
+        }
+
         public string changeType(int id, string type)
         {
             var issue = db.Issues.Where(i => i.Id == id).First();

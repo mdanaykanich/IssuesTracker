@@ -16,7 +16,18 @@
             <div style="float: right" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Kanban", "Kanban", "Home")</li>            
+                    <li>@Html.ActionLink("Kanban", "Kanban", "Home")</li>   
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink(User.Identity.Name, "Index", "Home")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
+                    
                 </ul>
             </div>
         </div>
