@@ -19,7 +19,7 @@
                     <li>@Html.ActionLink("Kanban", "Kanban", "Home")</li>   
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(User.Identity.Name, "Index", "Home")</li>
+                        <li>@Html.ActionLink(User.Identity.Name, "Index", "Home", new { @style = "pointer-events: none; cursor: default;" })</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                     }
                     else

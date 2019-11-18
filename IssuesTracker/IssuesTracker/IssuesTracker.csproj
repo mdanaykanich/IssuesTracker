@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201911150829114_adding identity tables.Designer.cs">
       <DependentUpon>201911150829114_adding identity tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911181305268_RoleIdtoUser.cs" />
+    <Compile Include="Migrations\201911181305268_RoleIdtoUser.Designer.cs">
+      <DependentUpon>201911181305268_RoleIdtoUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppIdentity\AppRole.cs" />
     <Compile Include="Models\AppIdentity\AppUser.cs" />
@@ -337,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911150829114_adding identity tables.resx">
       <DependentUpon>201911150829114_adding identity tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181305268_RoleIdtoUser.resx">
+      <DependentUpon>201911181305268_RoleIdtoUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

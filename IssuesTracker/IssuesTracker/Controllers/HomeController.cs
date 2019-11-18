@@ -13,22 +13,28 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Net;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace IssuesTracker.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         Repository repository = new Repository();
         SecureString ss = new SecureString();
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Login()
-        {
+        {      
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
+            
+
             if (ModelState.IsValid)
             {
                 var validation = repository.isValidUser(model.Email, ss.Encryptor(model.Password));
@@ -51,25 +57,34 @@ namespace IssuesTracker.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
             if (ModelState.IsValid)
             {
                 var validation = repository.checkUserByEmail(model.Email);
                 if (!validation)
                 {
-                    repository.addUser(new AppUser() { UserName = model.Email.Split('@')[0], Email = model.Email, PasswordHash = ss.Encryptor(model.Password) });
+                    var user = new AppUser()
+                        {
+                            UserName = model.Email.Split('@')[0],
+                            Email = model.Email,
+                            PasswordHash = ss.Encryptor(model.Password),
+                        };
+                    repository.addUser(user);
                     validation = repository.isValidUser(model.Email, ss.Encryptor(model.Password));
+                    userManager.AddToRole(userManager.FindByEmail(model.Email).Id, model.Role);
                     if (validation)
                     {
-
                         var ident = new ClaimsIdentity(
                             new[] {
                                 new Claim(ClaimTypes.Name, model.Email.Split('@')[0]),

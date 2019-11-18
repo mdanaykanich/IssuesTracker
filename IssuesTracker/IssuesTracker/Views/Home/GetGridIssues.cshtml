@@ -10,14 +10,7 @@
             <td>@issue.Priority</td>
             <td>@issue.Assignee</td>
             <td>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <button class="btn btn-light btn-edit" value="@issue.Id" data-target="#issueModal" data-toggle="modal">Edit</button>
-                }
-                else
-                {
-                    <button class="btn btn-light btn-edit" disabled value="@issue.Id" data-target="#issueModal" data-toggle="modal">Edit</button>
-                }
+                <button class="btn btn-light btn-edit" value="@issue.Id" data-target="#issueModal" data-toggle="modal">Edit</button>
             </td>
         </tr>
     }
