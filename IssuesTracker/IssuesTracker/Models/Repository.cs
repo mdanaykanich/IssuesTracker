@@ -15,11 +15,12 @@ namespace IssuesTracker.Models
             {
                 db.Issues.Add(issue);
                 db.SaveChanges();
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 return "Error. Wrong data entry";
             }
-            return "Successfully added"; 
+            return "Successfully added";
         }
 
         public string addUser(AppUser user)
@@ -40,7 +41,7 @@ namespace IssuesTracker.Models
         public string changeType(int id, string type)
         {
             var issue = db.Issues.Where(i => i.Id == id).First();
-            if(issue != null)
+            if (issue != null)
             {
                 issue.Type = (Type)Enum.Parse(typeof(Models.Type), type, true);
                 db.SaveChanges();
@@ -51,7 +52,7 @@ namespace IssuesTracker.Models
 
         public string editIssue(Issue issue)
         {
-            bool status; 
+            bool status;
             try
             {
                 Issue iss = db.Issues.Where(i => i.Id == issue.Id).FirstOrDefault();
@@ -67,7 +68,7 @@ namespace IssuesTracker.Models
                 }
                 status = true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 status = false;
             }
@@ -84,7 +85,7 @@ namespace IssuesTracker.Models
         public List<Issue_for_View> getIssues(int projectId)
         {
             return ViewIssues(db.Issues.Where(i => i.ProjectId == projectId).ToList());
-            
+
         }
 
         public int getProjectIdByName(string projectName)
@@ -101,7 +102,7 @@ namespace IssuesTracker.Models
         {
             List<Issue_for_View> iss = new List<Issue_for_View>();
 
-            foreach(var i in issues)
+            foreach (var i in issues)
             {
                 iss.Add(new Issue_for_View()
                 {
@@ -113,11 +114,22 @@ namespace IssuesTracker.Models
                     Assignee = i.Assignee,
                     ProjectName = db.Projects.Where(p => p.Id == i.ProjectId).Select(pr => pr.Name).First(),
                     ProjectId = i.ProjectId,
-                    Types = new List<string>() {"New", "InProgress", "Done" },
-                    Priorities = new List<string>() {"Trivial", "Low", "Medium", "High", "Critical" }
+                    Types = new List<string>() { "New", "InProgress", "Done" },
+                    Priorities = new List<string>() { "Trivial", "Low", "Medium", "High", "Critical" }
                 });
             }
             return iss;
+        }
+        public string getUserRoleName(string email)
+        {
+            var roleId = db.Users.Where(u => u.Email == email).FirstOrDefault().Roles.First().RoleId;
+            return db.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
+        }
+        public Project addProject(Project project)
+        {
+            db.Projects.Add(project);
+            db.SaveChanges();
+            return db.Projects.Where(p => p.Name == project.Name).FirstOrDefault();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace IssuesTracker.Models
     {
         string addIssue(Issue issue);
         string addUser(AppUser user);
+        Project addProject(Project project);
         string editIssue(Issue issue);
         string changeType(int id, string type);
         List<Issue_for_View> getIssues(int projectId);
@@ -19,6 +20,7 @@ namespace IssuesTracker.Models
         Issue_for_View getIssue(int id);
         bool isValidUser(string email, string password);
         bool checkUserByEmail(string email);
+        string getUserRoleName(string email);
         int getProjectIdByName(string projectName);
     }
 }

@@ -25,7 +25,7 @@ namespace IssuesTracker.Controllers
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Login()
-        {      
+        {
             return View();
         }
         [AllowAnonymous]
@@ -33,8 +33,6 @@ namespace IssuesTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
-            
-
             if (ModelState.IsValid)
             {
                 var validation = repository.isValidUser(model.Email, ss.Encryptor(model.Password));
@@ -43,7 +41,8 @@ namespace IssuesTracker.Controllers
                     var ident = new ClaimsIdentity(
                         new[] {
                             new Claim(ClaimTypes.Name, model.Email.Split('@')[0]),
-                            new Claim(ClaimTypes.Email, model.Email)
+                            new Claim(ClaimTypes.Email, model.Email),
+                            new Claim(ClaimTypes.Role, repository.getUserRoleName(model.Email))
                         }, DefaultAuthenticationTypes.ApplicationCookie);
                     HttpContext.GetOwinContext().Authentication.SignIn(
                         new AuthenticationProperties { IsPersistent = false }, ident);
@@ -69,17 +68,19 @@ namespace IssuesTracker.Controllers
         public ActionResult Register(RegisterViewModel model)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
+            var authManager = HttpContext.GetOwinContext().Authentication;
             if (ModelState.IsValid)
             {
                 var validation = repository.checkUserByEmail(model.Email);
                 if (!validation)
                 {
                     var user = new AppUser()
-                        {
-                            UserName = model.Email.Split('@')[0],
-                            Email = model.Email,
-                            PasswordHash = ss.Encryptor(model.Password),
-                        };
+                    {
+                       
+                        UserName = model.Email.Split('@')[0],
+                        Email = model.Email,
+                        PasswordHash = ss.Encryptor(model.Password),
+                    };
                     repository.addUser(user);
                     validation = repository.isValidUser(model.Email, ss.Encryptor(model.Password));
                     userManager.AddToRole(userManager.FindByEmail(model.Email).Id, model.Role);
@@ -88,7 +89,8 @@ namespace IssuesTracker.Controllers
                         var ident = new ClaimsIdentity(
                             new[] {
                                 new Claim(ClaimTypes.Name, model.Email.Split('@')[0]),
-                                new Claim(ClaimTypes.Email, model.Email)
+                                new Claim(ClaimTypes.Email, model.Email),
+                                new Claim(ClaimTypes.Role, model.Role)
                             }, DefaultAuthenticationTypes.ApplicationCookie);
                         HttpContext.GetOwinContext().Authentication.SignIn(
                             new AuthenticationProperties { IsPersistent = false }, ident);
@@ -172,6 +174,11 @@ namespace IssuesTracker.Controllers
             ViewBag.Action = "Edit";
             return PartialView(repository.getIssue(id));
         }
+        [HttpPost]
+        public ActionResult AddProject(string projectName)
+        {
+            return Json(repository.addProject(new Project() { Name = projectName }));
+        }
         [HttpGet]
         public ActionResult KanbanCards(int id)//id=projectId
         {
@@ -189,6 +196,7 @@ namespace IssuesTracker.Controllers
         }
         public ActionResult Kanban()
         {
+            ViewBag.test = User.IsInRole("Team Leader");
             ViewBag.projects = repository.getProjects();
             return View();
         }

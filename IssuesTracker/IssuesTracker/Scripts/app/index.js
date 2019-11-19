@@ -13,14 +13,40 @@
             fillGrid(event.target.value);
         });
         $(document).on('click', '.btn-edit', function () {
-            showModal($(this).val());
+            showIssueModal($(this).val());
         });
         $('#issueModal').on('hidden.bs.modal', function () {
             $("#selectType").find('option').remove();
             $("#selectPriority").find('option').remove();
         });
         $('#createIssue').on('click', function () {
-            showModal();
+            showIssueModal();
+        });
+        $('#createProject').on('click', function () {
+            $('#createPrj').attr('disabled', 'true');
+        });
+        $('#projectName').on('input', (function (e) {
+            let dis = $('#projectName').val().length >= 4;
+            $('#createPrj').attr('disabled', !dis);
+        }));
+        $('#createPrj').on('click', function () {
+            createProject();
+            fillGrid(selectProject.options[selectProject.selectedIndex].value);
+            $('#projectName').val("");
+        });
+    }
+    function createProject() {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/AddProject',
+            dataType: 'json',
+            data: { projectName: $('#projectName').val() },
+            success: function (result) {
+                let option = document.createElement('option');
+                option.setAttribute('value', result.Id);
+                option.text = result.Name;
+                selectProject.appendChild(option);
+            }
         });
     }
     function getPriorities() {
@@ -33,7 +59,7 @@
             }
         });
     }
-    function showModal(issueId) {
+    function showIssueModal(issueId) {
         let issue = {
             projectId: $('#project-select').val(),
             id: issueId
