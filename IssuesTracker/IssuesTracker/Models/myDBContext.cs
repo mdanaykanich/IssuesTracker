@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace IssuesTracker.Models
 {
-    public class myDBContext: IdentityDbContext<AppUser>
+    public class myDBContext : IdentityDbContext<AppUser>
     {
-        public myDBContext(): base("DefaultConnection") { }
+        public myDBContext() : base("DefaultConnection") { }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
     }

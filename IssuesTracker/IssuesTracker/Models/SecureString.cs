@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace IssuesTracker.Models
 {
@@ -14,7 +11,7 @@ namespace IssuesTracker.Models
         public string Encryptor(string strText)
         {
             byte[] byKey = { };
-            byte[] IV = { 18,52,86,120,144,171,205,239 };
+            byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
             byKey = Encoding.UTF8.GetBytes(EncrKey);
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] inputByteArray = Encoding.UTF8.GetBytes(strText);

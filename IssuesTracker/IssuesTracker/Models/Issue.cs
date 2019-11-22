@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IssuesTracker.Models
 {
-    public enum Priority { Trivial, Low, Medium, High, Critical}
-    public enum Type {  New, InProgress, Done}
+    public enum Priority { Trivial, Low, Medium, High, Critical }
+    public enum Type { New, InProgress, Done }
     public class Issue
     {
         [Required]

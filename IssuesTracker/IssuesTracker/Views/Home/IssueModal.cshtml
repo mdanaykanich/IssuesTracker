@@ -1,4 +1,5 @@
-﻿@model IssuesTracker.Models.Issue_for_View
+﻿@using IssuesTracker.Models
+@model Issue_for_View
 
 <div class="modal-lg modal-dialog" role="document">
     <div class="modal-content">
@@ -39,7 +40,7 @@
                         @if (ViewBag.Action == "Edit")
                         {
                             <select id="selectType" style="width: 200px" class="form-control">
-                                @foreach (var type in Model.Types)
+                                @foreach (string type in Model.Types)
                                 {
                                     if (type == Model.Type)
                                     {
@@ -90,7 +91,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h5 style="font-weight: bold">Assignee:</h5>
-                        <input id="assignee" class="form-control" value="@Model.Assignee" />
+                        <select id="assignee" style="width: 200px" class="form-control">
+                            @foreach (User_for_View user in (ViewBag.Users as List<User_for_View>))
+                            {
+                                if (user.User.UserName == Model.Assignee)
+                                {
+                                    <option selected value="@user.User.UserName">@user.User.UserName</option>
+                                }
+                                else
+                                {
+                                    <option value="@user.User.UserName">@user.User.UserName</option>
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <h5 style="font-weight: bold">Priority:</h5>

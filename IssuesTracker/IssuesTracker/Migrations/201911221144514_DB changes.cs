@@ -3,7 +3,7 @@ namespace IssuesTracker.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addingidentitytables : DbMigration
+    public partial class DBchanges : DbMigration
     {
         public override void Up()
         {
@@ -36,6 +36,7 @@ namespace IssuesTracker.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        ProjectId = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

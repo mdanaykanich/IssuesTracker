@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IssuesTracker.Models;
+﻿using System.Collections.Generic;
 
 namespace IssuesTracker.Models
 {
@@ -11,6 +6,7 @@ namespace IssuesTracker.Models
     {
         string addIssue(Issue issue);
         string addUser(AppUser user);
+        string addUserToProject(int projectId, string email);
         Project addProject(Project project);
         string editIssue(Issue issue);
         string changeType(int id, string type);
@@ -20,7 +16,9 @@ namespace IssuesTracker.Models
         Issue_for_View getIssue(int id);
         bool isValidUser(string email, string password);
         bool checkUserByEmail(string email);
+        List<User_for_View> getUsers();
         string getUserRoleName(string email);
         int getProjectIdByName(string projectName);
+        List<User_for_View> getUsersByProjectId(int projectId);
     }
 }

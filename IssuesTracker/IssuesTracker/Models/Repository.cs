@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace IssuesTracker.Models
 {
     public class Repository : IRepository
     {
         myDBContext db = new myDBContext();
+
         public string addIssue(Issue issue)
         {
             try
@@ -23,16 +22,30 @@ namespace IssuesTracker.Models
             return "Successfully added";
         }
 
+        public List<User_for_View> getUsersByProjectId(int projectId)
+        {
+            List<AppUser> users = db.Users.Where(u => u.ProjectId == projectId).ToList();
+            List<User_for_View> result = new List<User_for_View>();
+
+            foreach (AppUser user in users)
+            {
+                result.Add(new User_for_View() { User = user, Role = getUserRoleName(user.Email) });
+            }
+            return result;
+        }
+
         public string addUser(AppUser user)
         {
             db.Users.Add(user);
             db.SaveChanges();
             return "Successfully added";
         }
+
         public bool checkUserByEmail(string email)
         {
             return db.Users.Any(u => u.Email == email);
         }
+
         public bool isValidUser(string email, string password)
         {
             return db.Users.Any(u => u.Email == email && u.PasswordHash == password);
@@ -77,6 +90,7 @@ namespace IssuesTracker.Models
             return "Error";
 
         }
+
         public Issue_for_View getIssue(int id)
         {
             return ViewIssues(db.Issues.Where(i => i.Id == id).ToList()).First();
@@ -120,16 +134,35 @@ namespace IssuesTracker.Models
             }
             return iss;
         }
+
         public string getUserRoleName(string email)
         {
             var roleId = db.Users.Where(u => u.Email == email).FirstOrDefault().Roles.First().RoleId;
             return db.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
         }
+
         public Project addProject(Project project)
         {
             db.Projects.Add(project);
             db.SaveChanges();
             return db.Projects.Where(p => p.Name == project.Name).FirstOrDefault();
+        }
+
+        public List<User_for_View> getUsers()
+        {
+            List<User_for_View> users = new List<User_for_View>();
+            foreach (AppUser user in db.Users)
+            {
+                users.Add(new User_for_View() { User = user, Role = getUserRoleName(user.Email) });
+            }
+            return users;
+        }
+
+        public string addUserToProject(int projectId, string email)
+        {
+            db.Users.Where(u => u.Email == email).First().ProjectId = projectId;
+            db.SaveChanges();
+            return $"User {email} was successfully added to project {projectId}";
         }
     }
 }
