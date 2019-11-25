@@ -1,8 +1,9 @@
-﻿@model List<IssuesTracker.Models.Issue_for_View>
+﻿@using IssuesTracker.Models
+@model List<Issue_for_View>
 
 <div class="bounds"></div>
 
-@foreach (var type in ViewBag.Types)
+@foreach (string type in ViewBag.Types)
 {
     <div class="col-sm-4">
         <ul class="list-group kanban-ul connectedSortable" id="@type.ToLower()Issues">

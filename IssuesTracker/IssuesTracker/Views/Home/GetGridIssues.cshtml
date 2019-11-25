@@ -1,7 +1,7 @@
 ﻿@model List<IssuesTracker.Models.Issue_for_View>
 
 @{
-    foreach (var issue in Model)
+    foreach (IssuesTracker.Models.Issue_for_View issue in Model)
     {
         <tr>
             <th>@issue.Id.ToString("D6")</th>

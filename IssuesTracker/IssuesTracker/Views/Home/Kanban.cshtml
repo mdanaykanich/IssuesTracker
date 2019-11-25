@@ -14,7 +14,7 @@
             <select id="project-select" style="width: 100%" class="form-control">
                 @{
                     int i = 0;
-                    foreach (var pr in ViewBag.projects)
+                    foreach (IssuesTracker.Models.Project pr in ViewBag.projects)
                     {
                         if (i == 0)
                         {

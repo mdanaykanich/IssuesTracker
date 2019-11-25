@@ -48,11 +48,13 @@ namespace IssuesTracker.Controllers
             repository.editIssue(_issue);
             return Json("Successfully edited");
         }
+
         [HttpGet]
         public ActionResult GetGridIssues(int id) //id = projectId
         {
             return PartialView(repository.getIssues(id));
         }
+
         [HttpPost]
         public ActionResult IssueModal(int projectId, int id = -1)
         {

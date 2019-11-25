@@ -53,7 +53,7 @@ namespace IssuesTracker.Models
 
         public string changeType(int id, string type)
         {
-            var issue = db.Issues.Where(i => i.Id == id).First();
+            Issue issue = db.Issues.Where(i => i.Id == id).First();
             if (issue != null)
             {
                 issue.Type = (Type)Enum.Parse(typeof(Type), type, true);
@@ -116,7 +116,7 @@ namespace IssuesTracker.Models
         {
             List<Issue_for_View> iss = new List<Issue_for_View>();
 
-            foreach (var i in issues)
+            foreach (Issue i in issues)
             {
                 iss.Add(new Issue_for_View()
                 {
@@ -137,7 +137,7 @@ namespace IssuesTracker.Models
 
         public string getUserRoleName(string email)
         {
-            var roleId = db.Users.Where(u => u.Email == email).FirstOrDefault().Roles.First().RoleId;
+            string roleId = db.Users.Where(u => u.Email == email).FirstOrDefault().Roles.First().RoleId;
             return db.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
         }
 
