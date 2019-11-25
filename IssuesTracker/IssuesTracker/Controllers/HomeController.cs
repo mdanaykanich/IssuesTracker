@@ -66,7 +66,7 @@ namespace IssuesTracker.Controllers
                 issue_for_view.Priority = "Trivial";
                 return PartialView(issue_for_view);
             }
-            ViewBag.Action = "Edit"; 
+            ViewBag.Action = "Edit";
             return PartialView(repository.getIssue(id));
         }
 

@@ -1,10 +1,10 @@
 ﻿$(function () {
-    const selectProject = document.getElementById('selectProject');
-    selectProject.addEventListener('change', function (event) {
-        addUserToProject(event.target.value, event.target.dataset.user);
-    });
-    function addUserToProject(projectId, email) 
-    {
+    document.addEventListener('change', function (e) {
+        if (e.target && e.target.classList.contains('selectProject')) {
+            addUserToProject(event.target.value, event.target.dataset.user);
+        }
+    })
+    function addUserToProject(projectId, email) {
         if (projectId == 'none') {
             return;
         }

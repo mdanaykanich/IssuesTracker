@@ -30,14 +30,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(User_for_View user in Model)
+                    @foreach (User_for_View user in Model)
                     {
                         <tr>
                             <td>@user.User.UserName</td>
                             <td>@user.User.Email</td>
                             <td>@user.Role</td>
                             <td>
-                                <select class="form-control" id="selectProject" data-user="@user.User.Email">
+                                <select class="form-control selectProject" data-user="@user.User.Email">
                                     <option value="none">-- Select project --</option>
                                     @foreach (Project project in (ViewBag.Projects as List<Project>))
                                     {

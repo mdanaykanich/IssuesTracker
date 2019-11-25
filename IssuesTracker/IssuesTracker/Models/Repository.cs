@@ -56,7 +56,7 @@ namespace IssuesTracker.Models
             var issue = db.Issues.Where(i => i.Id == id).First();
             if (issue != null)
             {
-                issue.Type = (Type)Enum.Parse(typeof(Models.Type), type, true);
+                issue.Type = (Type)Enum.Parse(typeof(Type), type, true);
                 db.SaveChanges();
                 return "Successfully changed";
             }
@@ -160,7 +160,12 @@ namespace IssuesTracker.Models
 
         public string addUserToProject(int projectId, string email)
         {
-            db.Users.Where(u => u.Email == email).First().ProjectId = projectId;
+            AppUser user = db.Users.Where(u => u.Email == email).FirstOrDefault();
+            if (user != null)
+            {
+                db.Issues.Where(i => i.ProjectId == user.ProjectId && i.Assignee == user.UserName).ToList().ForEach((issue) => issue.Assignee = "");
+            }
+            user.ProjectId = projectId;
             db.SaveChanges();
             return $"User {email} was successfully added to project {projectId}";
         }

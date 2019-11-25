@@ -1,5 +1,4 @@
-﻿
-$('.kanban-ul').sortable({
+﻿$('.kanban-ul').sortable({
     connectWith: '.connectedSortable'
 }).disableSelection();
 $('#newIssues').sortable({
