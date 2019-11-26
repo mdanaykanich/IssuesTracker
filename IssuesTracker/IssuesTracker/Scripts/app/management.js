@@ -5,7 +5,7 @@
         }
     })
     function addUserToProject(projectId, email) {
-        if (projectId == 'none') {
+        if (projectId === 'none') {
             return;
         }
         $.ajax({

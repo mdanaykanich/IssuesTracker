@@ -17,54 +17,56 @@ namespace IssuesTracker.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddIssue(Issue_for_View issue)
+        public ActionResult AddIssue(Issue_for_View issueForView)
         {
             Issue _issue = new Issue()
             {
-                Summary = issue.Summary,
-                Description = issue.Description,
-                Assignee = issue.Assignee,
-                ProjectId = issue.ProjectId,
-                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issue.Type, true),
-                Priority = (Priority)Enum.Parse(typeof(Priority), issue.Priority, true)
+                Summary = issueForView.Summary,
+                Description = issueForView.Description,
+                Assignee = issueForView.Assignee,
+                ProjectId = issueForView.ProjectId,
+                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issueForView.Type, true),
+                Priority = (Priority)Enum.Parse(typeof(Priority), issueForView.Priority, true)
             };
-            var str = repository.addIssue(_issue);
-            return Json(str);
+            return Json(repository.addIssue(_issue));
         }
 
         [HttpPost]
-        public ActionResult EditIssue(Issue_for_View issue)
+        public ActionResult EditIssue(Issue_for_View issueForView)
         {
             Issue _issue = new Issue()
             {
-                Id = issue.Id,
-                Summary = issue.Summary,
-                Description = issue.Description,
-                Assignee = issue.Assignee,
-                ProjectId = repository.getProjectIdByName(issue.ProjectName),
-                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issue.Type, true),
-                Priority = (Priority)Enum.Parse(typeof(Priority), issue.Priority, true)
+                Id = issueForView.Id,
+                Summary = issueForView.Summary,
+                Description = issueForView.Description,
+                Assignee = issueForView.Assignee,
+                ProjectId = repository.getProjectIdByName(issueForView.ProjectName),
+                Type = (Models.Type)Enum.Parse(typeof(Models.Type), issueForView.Type, true),
+                Priority = (Priority)Enum.Parse(typeof(Priority), issueForView.Priority, true)
             };
-            repository.editIssue(_issue);
-            return Json("Successfully edited");
+            return Json(repository.editIssue(_issue));
         }
+
         [HttpGet]
-        public ActionResult GetGridIssues(int id) //id = projectId
+        public ActionResult GetGridIssues(int id)
         {
             return PartialView(repository.getIssues(id));
         }
+
         [HttpPost]
         public ActionResult IssueModal(int projectId, int id = -1)
         {
+            const int nonexistentIssueId = -1;
+            int issueId = id;
             ViewBag.Users = repository.getUsersByProjectId(projectId);
-            if (id == -1)
+            if (issueId == nonexistentIssueId)
             {
                 ViewBag.Action = "Create";
                 Issue issue = new Issue();
                 issue.ProjectId = projectId;
-                Issue_for_View issue_for_view = repository.ViewIssues(new List<Issue>() { issue }).First();
-                issue_for_view.Priority = "Trivial";
-                return PartialView(issue_for_view);
+                Issue_for_View issueForView = repository.ViewIssues(new List<Issue>() { issue }).First();
+                issueForView.Priority = "Trivial";
+                return PartialView(issueForView);
             }
             ViewBag.Action = "Edit";
             return PartialView(repository.getIssue(id));
@@ -89,14 +91,14 @@ namespace IssuesTracker.Controllers
         }
 
         [HttpGet]
-        public ActionResult KanbanCards(int id)//id=projectId
+        public ActionResult KanbanCards(int id)
         {
             ViewBag.Types = Enum.GetNames(typeof(Models.Type)).ToList();
             return PartialView(repository.getIssues(id));
         }
 
         [HttpPost]
-        public ActionResult UpdateType(int issueId, string issueType)//id = issueId
+        public ActionResult UpdateType(int issueId, string issueType)
         {
             return Json(repository.changeType(issueId, issueType));
         }

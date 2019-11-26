@@ -3,14 +3,14 @@
 }).disableSelection();
 $('#newIssues').sortable({
     receive: function (ev, ui) {
-        if (ui.item[0].dataset.type == 'InProgress' || ui.item[0].dataset.type == 'Done') {
+        if (ui.item[0].dataset.type === 'InProgress' || ui.item[0].dataset.type === 'Done') {
             ui.sender.sortable('cancel');
         }
     }
 });
 $('#inprogressIssues').sortable({
     receive: function (ev, ui) {
-        if (ui.item[0].dataset.type == 'Done') {
+        if (ui.item[0].dataset.type === 'Done') {
             ui.sender.sortable('cancel');
         }
         else {

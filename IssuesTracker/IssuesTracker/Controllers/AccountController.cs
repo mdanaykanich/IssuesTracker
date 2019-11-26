@@ -87,16 +87,16 @@ namespace IssuesTracker.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        void SetClaimsIdentity(string email, string role)
+        private void SetClaimsIdentity(string userEmail, string roleName)
         {
-            ClaimsIdentity identity = new ClaimsIdentity(
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
                        new[] {
-                            new Claim(ClaimTypes.Name, email.Split('@')[0]),
-                            new Claim(ClaimTypes.Email, email),
-                            new Claim(ClaimTypes.Role, role)
+                            new Claim(ClaimTypes.Name, userEmail.Split('@')[0]),
+                            new Claim(ClaimTypes.Email, userEmail),
+                            new Claim(ClaimTypes.Role, roleName)
                        }, DefaultAuthenticationTypes.ApplicationCookie);
             HttpContext.GetOwinContext().Authentication.SignIn(
-                new AuthenticationProperties { IsPersistent = false }, identity);
+                new AuthenticationProperties { IsPersistent = false }, claimsIdentity);
         }
     }
 }

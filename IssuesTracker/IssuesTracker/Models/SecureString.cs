@@ -10,31 +10,31 @@ namespace IssuesTracker.Models
         string EncrKey = "password";
         public string Encryptor(string strText)
         {
-            byte[] byKey = { };
+            byte[] byteKey = { };
             byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
-            byKey = Encoding.UTF8.GetBytes(EncrKey);
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            byteKey = Encoding.UTF8.GetBytes(EncrKey);
+            DESCryptoServiceProvider DEScrypto = new DESCryptoServiceProvider();
             byte[] inputByteArray = Encoding.UTF8.GetBytes(strText);
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(byKey, IV), CryptoStreamMode.Write);
-            cs.Write(inputByteArray, 0, inputByteArray.Length);
-            cs.FlushFinalBlock();
-            return Convert.ToBase64String(ms.ToArray());
+            MemoryStream memoryStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, DEScrypto.CreateEncryptor(byteKey, IV), CryptoStreamMode.Write);
+            cryptoStream.Write(inputByteArray, 0, inputByteArray.Length);
+            cryptoStream.FlushFinalBlock();
+            return Convert.ToBase64String(memoryStream.ToArray());
         }
         public string Decryptor(string stringToDecrypt)
         {
             byte[] inputByteArray = new byte[stringToDecrypt.Length];
-            byte[] byKey = { };
+            byte[] byteKey = { };
             byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
-            byKey = Encoding.UTF8.GetBytes(EncrKey);
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            byteKey = Encoding.UTF8.GetBytes(EncrKey);
+            DESCryptoServiceProvider DEScrypto = new DESCryptoServiceProvider();
             inputByteArray = Convert.FromBase64String(stringToDecrypt);
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(byKey, IV), CryptoStreamMode.Write);
-            cs.Write(inputByteArray, 0, inputByteArray.Length);
-            cs.FlushFinalBlock();
+            MemoryStream memoryStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, DEScrypto.CreateDecryptor(byteKey, IV), CryptoStreamMode.Write);
+            cryptoStream.Write(inputByteArray, 0, inputByteArray.Length);
+            cryptoStream.FlushFinalBlock();
             Encoding encoding = Encoding.UTF8;
-            return encoding.GetString(ms.ToArray());
+            return encoding.GetString(memoryStream.ToArray());
         }
     }
 }
