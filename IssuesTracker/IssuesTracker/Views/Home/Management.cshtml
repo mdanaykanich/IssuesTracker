@@ -32,27 +32,30 @@
                 <tbody>
                     @foreach (User_for_View user in Model)
                     {
-                        <tr>
-                            <td>@user.User.UserName</td>
-                            <td>@user.User.Email</td>
-                            <td>@user.Role</td>
-                            <td>
-                                <select class="form-control selectProject" data-user="@user.User.Email">
-                                    <option value="none">-- Select project --</option>
-                                    @foreach (Project project in (ViewBag.Projects as List<Project>))
-                                    {
-                                        if (project.Id == user.User.ProjectId)
+                        if (user.Role != "Manager")
+                        {
+                            <tr>
+                                <td>@user.User.UserName</td>
+                                <td>@user.User.Email</td>
+                                <td>@user.Role</td>
+                                <td>
+                                    <select class="form-control selectProject" data-user="@user.User.Email">
+                                        <option value="none">-- Select project --</option>
+                                        @foreach (Project project in (ViewBag.Projects as List<Project>))
                                         {
-                                            <option value="@project.Id" selected>@project.Name</option>
+                                            if (project.Id == user.User.ProjectId)
+                                            {
+                                                <option value="@project.Id" selected>@project.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@project.Id">@project.Name</option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <option value="@project.Id">@project.Name</option>
-                                        }
-                                    }
-                                </select>
-                            </td>
-                        </tr>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

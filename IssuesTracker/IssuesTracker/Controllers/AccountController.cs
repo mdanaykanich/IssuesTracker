@@ -43,6 +43,7 @@ namespace IssuesTracker.Controllers
         [HttpGet]
         public ActionResult Register()
         {
+            ViewBag.Roles = repository.getRoleNames();
             return View();
         }
 

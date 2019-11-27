@@ -36,7 +36,7 @@
                     @Html.LabelFor(m => m.Role, new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
                         <select class="form-control" id="Role" name="Role">
-                            @foreach (var role in new List<string>() { "Team Leader", "Developer", "QA" })
+                            @foreach (var role in (ViewBag.Roles as List<string>))
                             {
                                 <option value="@role">@role</option>
                             }

@@ -74,6 +74,10 @@ namespace IssuesTracker.Controllers
 
         public ActionResult Management()
         {
+            if(!User.IsInRole("Manager"))
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.Projects = repository.getProjects();
             return View(repository.getUsers());
         }
@@ -92,7 +96,16 @@ namespace IssuesTracker.Controllers
 
         [HttpGet]
         public ActionResult KanbanCards(int id)
-        {
+        {      
+            Dictionary<string, string> priorityColors = new Dictionary<string, string>();
+
+            priorityColors.Add("Trivial", "lightyellow");
+            priorityColors.Add("Low", "yellow");
+            priorityColors.Add("Medium", "orange");
+            priorityColors.Add("High", "orangered");
+            priorityColors.Add("Critical", "red");
+
+            ViewBag.PriorityColors = priorityColors;
             ViewBag.Types = Enum.GetNames(typeof(Models.Type)).ToList();
             return PartialView(repository.getIssues(id));
         }

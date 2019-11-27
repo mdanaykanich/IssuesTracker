@@ -169,5 +169,13 @@ namespace IssuesTracker.Models
             db.SaveChanges();
             return $"User {email} was successfully added to project {projectId}";
         }
+
+        public List<string> getRoleNames()
+        {
+            List<string> roleNames = new List<string>();
+            roleNames.Add("Team Leader");
+            roleNames.AddRange(db.Roles.Select(role => role.Name).ToList());
+            return roleNames.Distinct().ToList();         
+        }
     }
 }

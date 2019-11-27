@@ -17,6 +17,7 @@ namespace IssuesTracker.Models
         bool isValidUser(string email, string password);
         bool checkUserByEmail(string email);
         List<User_for_View> getUsers();
+        List<string> getRoleNames();
         string getUserRoleName(string email);
         int getProjectIdByName(string projectName);
         List<User_for_View> getUsersByProjectId(int projectId);

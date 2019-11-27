@@ -9,7 +9,9 @@
         <ul class="list-group kanban-ul connectedSortable" id="@type.ToLower()Issues">
             @foreach (var issue in Model.Where(i => i.Type == type))
             {
-                <li class="list-group-item kanban-li" data-type="@issue.Type" id="@issue.Id">
+                string color = (ViewBag.PriorityColors as Dictionary<string, string>)[issue.Priority];
+
+                <li class="list-group-item kanban-li" style="background-color: @color" data-type="@issue.Type" id="@issue.Id">
                     <div class="row">
                         <div class="col">
                             <span style="margin-left: 1em; display: block">
