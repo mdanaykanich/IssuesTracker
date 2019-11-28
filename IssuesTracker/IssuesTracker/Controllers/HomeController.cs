@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using IssuesTracker.Models;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace IssuesTracker.Controllers
 {
@@ -70,6 +73,21 @@ namespace IssuesTracker.Controllers
             }
             ViewBag.Action = "Edit";
             return PartialView(repository.getIssue(id));
+        }
+
+        [HttpGet]
+        public ActionResult Roles()
+        {
+            return View(repository.getRoleNames());
+        }
+
+        [HttpPost]
+        public ActionResult AddRole(string roleName)
+        {
+            var roleManager = HttpContext.GetOwinContext().GetUserManager<RoleManager<AppRole>>();
+            if (!roleManager.RoleExists(roleName))
+                roleManager.Create(new AppRole(roleName));
+            return Json($"Role {roleName} was successfully added");
         }
 
         public ActionResult Management()

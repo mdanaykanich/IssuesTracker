@@ -257,6 +257,7 @@
     <Content Include="Scripts\app\issuemodal.js" />
     <Content Include="Scripts\app\kanbancards.js" />
     <Content Include="Scripts\app\management.js" />
+    <Content Include="Scripts\app\roles.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -322,8 +323,9 @@
     <Content Include="Views\Home\KanbanCards.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\ProjectModal.cshtml" />
     <Content Include="Views\Home\Management.cshtml" />
+    <Content Include="Views\Home\Roles.cshtml" />
+    <Content Include="Views\Account\UpdateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

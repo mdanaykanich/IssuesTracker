@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace IssuesTracker.Models
 {
@@ -88,7 +90,6 @@ namespace IssuesTracker.Models
             if (status)
                 return "Successfully updated";
             return "Error";
-
         }
 
         public Issue_for_View getIssue(int id)
@@ -137,8 +138,10 @@ namespace IssuesTracker.Models
 
         public string getUserRoleName(string email)
         {
-            string roleId = db.Users.Where(u => u.Email == email).FirstOrDefault().Roles.First().RoleId;
-            return db.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
+            AppUser user = db.Users.Where(u => u.Email == email).FirstOrDefault();
+            string roleId = user.Roles.FirstOrDefault().RoleId;
+            string rolename = db.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
+            return rolename;
         }
 
         public Project addProject(Project project)
@@ -153,6 +156,8 @@ namespace IssuesTracker.Models
             List<User_for_View> users = new List<User_for_View>();
             foreach (AppUser user in db.Users)
             {
+                if (user.Email.ToLower().Contains("admin") || getUserRoleName(user.Email) == "Manager")
+                    continue;
                 users.Add(new User_for_View() { User = user, Role = getUserRoleName(user.Email) });
             }
             return users;
@@ -170,12 +175,41 @@ namespace IssuesTracker.Models
             return $"User {email} was successfully added to project {projectId}";
         }
 
+        public string getEmailByUsername(string username)
+        {
+            return db.Users.Where(u => u.UserName == username).FirstOrDefault().Email;
+        }
+
         public List<string> getRoleNames()
         {
             List<string> roleNames = new List<string>();
-            roleNames.Add("Team Leader");
-            roleNames.AddRange(db.Roles.Select(role => role.Name).ToList());
-            return roleNames.Distinct().ToList();         
+            if (db.Roles.Select(role => role.Name).ToList().Count > 0)
+            {
+                roleNames.AddRange(db.Roles.Select(role => role.Name).ToList());
+            }
+            else
+            {
+                roleNames.Add("--None--");
+            }
+            return roleNames;         
+        }
+
+        public string updateUser(string email, string newUsername, string newPassword)
+        {
+            AppUser user = db.Users.Where(u => u.Email == email).FirstOrDefault();
+            if(user != null)
+            {
+                user.UserName = newUsername;
+                user.PasswordHash = newPassword;
+                db.SaveChanges();
+                return $"User with Email {email} was successfulle updated";
+            }
+            return "Wrong data";
+        }
+
+        public string getUsernameByEmail(string email)
+        {
+            return db.Users.Where(u => u.Email == email).FirstOrDefault().UserName;
         }
     }
 }

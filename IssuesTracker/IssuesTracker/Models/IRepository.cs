@@ -21,5 +21,8 @@ namespace IssuesTracker.Models
         string getUserRoleName(string email);
         int getProjectIdByName(string projectName);
         List<User_for_View> getUsersByProjectId(int projectId);
+        string getEmailByUsername(string username);
+        string getUsernameByEmail(string email);
+        string updateUser(string email, string newUsername, string newPassword);
     }
 }

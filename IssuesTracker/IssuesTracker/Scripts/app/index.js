@@ -2,16 +2,23 @@
     const selectProject = document.getElementById('project-select');
     const table = $('#result');
     let priorities;
-    init(selectProject.options[selectProject.selectedIndex].value);
+    if ($('#select-project option').length === 0) {
+        init(0);
+    }
+    else {
+        init(selectProject.options[selectProject.selectedIndex].value);
+    }
     function init(projectId) {
         getPriorities();
         eventHandler();
-        fillGrid(projectId);
+        if ($('#select-project option').length > 0) {
+            fillGrid(projectId);
+        }
     }
     function eventHandler() {
         selectProject.addEventListener('change', function (event) {
             fillGrid(event.target.value);
-        });
+        });      
         $(document).on('click', '.btn-edit', function () {
             showIssueModal($(this).val());
         });
@@ -22,17 +29,14 @@
         $('#createIssue').on('click', function () {
             showIssueModal();
         });
-        $('#createProject').on('click', function () {
-            $('#createPrj').attr('disabled', 'true');
-        });
+        $('#createPrj').attr('disabled', 'disabled');
         $('#projectName').on('input', (function (e) {
             let dis = $('#projectName').val().length >= 4;
             $('#createPrj').attr('disabled', !dis);
         }));
         $('#createPrj').on('click', function () {
             createProject();
-            fillGrid(selectProject.options[selectProject.selectedIndex].value);
-            $('#projectName').val("");
+            $('#projectName').val("");         
         });
     }
     function createProject() {
@@ -44,8 +48,11 @@
             success: function (result) {
                 let option = document.createElement('option');
                 option.setAttribute('value', result.Id);
+                option.setAttribute('selected', true);
                 option.text = result.Name;
                 selectProject.appendChild(option);
+                fillGrid(result.Id);
+                $('#createIssue').attr('disabled', false);
             }
         });
     }

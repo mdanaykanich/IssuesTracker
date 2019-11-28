@@ -5,6 +5,7 @@
 /// <reference path="app/kanban.js" />
 /// <reference path="app/kanbancards.js" />
 /// <reference path="app/management.js" />
+/// <reference path="app/roles.js" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="esm/popper.min.js" />
 /// <reference path="esm/popper-utils.min.js" />

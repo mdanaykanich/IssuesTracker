@@ -23,7 +23,11 @@
                         {
                             <li>@Html.ActionLink("Management", "Management", "Home")</li>
                         }
-                        <li>@Html.ActionLink(User.Identity.Name, "Index", "Home", new { @style = "pointer-events: none; cursor: default;" })</li>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Roles", "Roles", "Home")</li>
+                        }
+                        <li>@Html.ActionLink(User.Identity.Name, "UpdateUser", "Account")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     }
                     else
