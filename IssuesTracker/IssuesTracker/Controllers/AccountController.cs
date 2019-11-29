@@ -95,13 +95,21 @@ namespace IssuesTracker.Controllers
                     ModelState.AddModelError("", "User with the same Email already exists");
                 }
             }
-           
+            ViewBag.Roles = repository.getRoleNames();
             return View(model);
         }
 
         [HttpGet]
         public ActionResult UpdateUser()
         {
+            if(!repository.getEmailByUsername(User.Identity.Name).ToLower().Contains("admin"))
+            {
+                ViewBag.Role = repository.getUserRoleName(repository.getEmailByUsername(User.Identity.Name));
+            }
+            else
+            {
+                ViewBag.Role = "Admin";
+            }
             ViewBag.Roles = repository.getRoleNames();
             ViewBag.Email = repository.getEmailByUsername(User.Identity.Name);
             return View();

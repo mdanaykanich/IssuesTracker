@@ -49,7 +49,10 @@
                 <select class="form-control" id="Role" name="Role">
                     @foreach (string role in (ViewBag.Roles as List<string>))
                     {
-                        <option value="@role">@role</option>
+                        if (ViewBag.Role as string != "Admin" && role == ViewBag.Role as string)
+                        {
+                            <option value="@role">@role</option>
+                        }
                     }
                 </select>
             </div>

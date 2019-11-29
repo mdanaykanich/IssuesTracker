@@ -62,7 +62,6 @@ namespace IssuesTracker.Models.IdentityViews
         [Display(Name = "New password")]
         public string newPassword { get; set; }
 
-        [Required]
         public string Role { get; set; }
     }
 }
