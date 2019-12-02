@@ -9,7 +9,7 @@ namespace IssuesTracker.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "IssuesTracker.Models.myDBContext";
         }
     }

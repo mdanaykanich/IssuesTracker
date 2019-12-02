@@ -10,6 +10,7 @@ namespace IssuesTracker.Models
         public myDBContext() : base("DefaultConnection") { }
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+            Database.SetInitializer<myDBContext>(null);
             base.OnModelCreating(builder);
         }
     }
