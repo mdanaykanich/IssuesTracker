@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using IssuesTracker.Migrations;
 
 namespace IssuesTracker.Models
 {
@@ -10,7 +11,7 @@ namespace IssuesTracker.Models
         public myDBContext() : base("DefaultConnection") { }
         protected override void OnModelCreating(DbModelBuilder builder)
         {
-            Database.SetInitializer<myDBContext>(null);
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<myDBContext, Configuration>());
             base.OnModelCreating(builder);
         }
     }
