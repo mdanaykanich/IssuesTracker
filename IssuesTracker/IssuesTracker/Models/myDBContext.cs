@@ -5,8 +5,12 @@ namespace IssuesTracker.Models
 {
     public class myDBContext : IdentityDbContext<AppUser>
     {
-        public myDBContext() : base("DefaultConnection") { }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Issue> Issues { get; set; }
+        public myDBContext() : base("DefaultConnection") { }
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }
