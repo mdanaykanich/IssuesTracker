@@ -1,67 +1,78 @@
 ﻿@model IssuesTracker.Models.IdentityViews.UpdateViewModel
 
 @{
-    ViewBag.Title = "Update";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Update";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Update user</h2>
 
 @using (Html.BeginForm("UpdateUser", "Account", FormMethod.Post))
 {
-    <div class="form-horizontal col-md-8">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Email, @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @Value = User.Identity.Name } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-            </div>
-        </div>
+	<div class="form-horizontal col-md-8">
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Email, @readonly = "readonly" } })
+				@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-4" })
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @Value = User.Identity.Name } })
+				@Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+			</div>
+		</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.oldPassword, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.oldPassword, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.oldPassword, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.oldPassword, htmlAttributes: new { @class = "control-label col-md-4" })
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.oldPassword, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.oldPassword, "", new { @class = "text-danger" })
+			</div>
+		</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.newPassword, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.newPassword, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.newPassword, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.newPassword, htmlAttributes: new { @class = "control-label col-md-4" })
+			<div class="col-md-7">
+				@Html.EditorFor(model => model.newPassword, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.newPassword, "", new { @class = "text-danger" })
+			</div>
+		</div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Role, new { @class = "col-md-4 control-label" })
-            <div class="col-md-7">
-                <select class="form-control" id="Role" name="Role">
-                    @foreach (string role in (ViewBag.Roles as List<string>))
-                    {
-                        if (ViewBag.Role as string != "Admin" && role == ViewBag.Role as string)
-                        {
-                            <option value="@role">@role</option>
-                        }
-                    }
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <input type="submit" class="btn btn-default" value="Update" />
-            </div>
-        </div>
-    </div>
+		<div class="form-group">
+			@Html.LabelFor(m => m.Role, new { @class = "col-md-4 control-label" })
+			<div class="col-md-7">
+				@if (ViewBag.Role as string == "Admin")
+				{
+					<select class="form-control" disabled id="Role" name="Role">
+						@foreach (string role in (ViewBag.Roles as List<string>))
+						{
+							if (ViewBag.Role as string != "Admin" && role == ViewBag.Role as string)
+							{
+								<option value="@role">@role</option>
+							}
+						}
+					</select>
+				}
+				else
+				{
+					<select class="form-control" id="Role" name="Role">
+						@foreach (string role in (ViewBag.Roles as List<string>))
+						{
+							<option value="@role">@role</option>
+						}
+					</select>
+				}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-4 col-md-8">
+				<input type="submit" class="btn btn-default" value="Update" />
+			</div>
+		</div>
+	</div>
 }

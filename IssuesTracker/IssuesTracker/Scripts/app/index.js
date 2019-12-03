@@ -36,7 +36,7 @@
         }));
         $('#createPrj').on('click', function () {
             createProject();
-            $('#projectName').val("");         
+            $('#projectName').val("");
         });
     }
     function createProject() {

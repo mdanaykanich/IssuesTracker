@@ -92,7 +92,7 @@ namespace IssuesTracker.Controllers
 
         public ActionResult Management()
         {
-            if(!User.IsInRole("Manager"))
+            if (!User.IsInRole("Manager"))
             {
                 return RedirectToAction("Index");
             }
@@ -114,7 +114,7 @@ namespace IssuesTracker.Controllers
 
         [HttpGet]
         public ActionResult KanbanCards(int id)
-        {      
+        {
             Dictionary<string, string> priorityColors = new Dictionary<string, string>();
 
             priorityColors.Add("Trivial", "lightyellow");
