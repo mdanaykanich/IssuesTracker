@@ -1,10 +1,10 @@
 ﻿$(function () {
 	let managementSelects = document.getElementsByClassName('managementTable')[0];
-    managementSelects.addEventListener('change', function (e) {
-        if (e.target && e.target.classList.contains('selectProject')) {
-            addUserToProject(event.target.value, event.target.dataset.user);
-        }
-    })
+	managementSelects.addEventListener('change', function (e) {
+		if (e.target && e.target.classList.contains('selectProject')) {
+			addUserToProject(event.target.value, event.target.dataset.user);
+		}
+	});
     function addUserToProject(projectId, email) {
         if (projectId === 'none') {
             return;
